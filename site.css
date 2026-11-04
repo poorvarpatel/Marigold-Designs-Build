@@ -66,10 +66,10 @@ body{
 }
 h1{
   margin:0 0 4px;
-  font-family:"Poiret One",serif;
-  font-weight:400;
+  font-family:"Josefin Sans",system-ui,sans-serif;
+  font-weight:300;
   font-size:26px;
-  letter-spacing:.06em;
+  letter-spacing:.1em;
   color:var(--burgundy);
 }
 .button{
