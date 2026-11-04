@@ -47,10 +47,17 @@ body{
 .topnav nav a:hover,.topnav nav a[aria-current]{color:var(--orange)}
 .topnav a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .topnav .brand img{display:block;height:84px;width:auto}
+.menu-btn{display:none}
 @media(max-width:700px){
   .topnav .brand img{height:48px}
-  .topnav nav{gap:14px}
-  .topnav a{font-size:11px;letter-spacing:.12em}
+  .menu-btn{display:block;position:fixed;top:12px;right:14px;z-index:60;width:46px;height:46px;border:0;background:none;padding:11px;cursor:pointer}
+  .menu-btn span{display:block;width:24px;height:2px;background:var(--cream);margin:5px 0;border-radius:1px;transition:transform .25s ease,opacity .2s ease}
+  .menu-btn[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .menu-btn[aria-expanded="true"] span:nth-child(2){opacity:0}
+  .menu-btn[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .topnav nav{position:fixed;inset:0;top:0;right:0;z-index:50;flex-direction:column;justify-content:center;gap:34px;background:rgba(88,1,28,.72);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);opacity:0;visibility:hidden;transition:opacity .25s ease,visibility .25s ease}
+  .topnav nav.open{opacity:1;visibility:visible}
+  .topnav a{font-size:15px;letter-spacing:.22em}
 }
 
 /* Shared card */

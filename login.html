@@ -46,7 +46,8 @@ input:focus-visible{outline:2px solid var(--burgundy);outline-offset:1px;border-
 <body>
 <header class="topnav">
   <a class="brand" href="/" aria-label="Marigold Designs home"><img src="assets/logo-horizontal.webp" alt="Marigold Designs" width="760" height="308"></a>
-  <nav aria-label="Main navigation"><a href="/">Welcome</a><a href="/">Our Work</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="login.html" aria-current="page">Login</a></nav>
+  <button id="menuBtn" class="menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="mainnav"><span></span><span></span><span></span></button>
+  <nav id="mainnav" aria-label="Main navigation"><a href="/">Welcome</a><a href="ourwork.html">Our Work</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="login.html" aria-current="page">Login</a></nav>
 </header>
 
 <main class="card">
@@ -127,5 +128,6 @@ if (!fbConfig) {
   });
 }
 </script>
+<script src="site.js"></script>
 </body>
 </html>
