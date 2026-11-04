@@ -9,7 +9,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Josefin+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css">
 <style>
 h1{font-family:"Josefin Sans",system-ui,sans-serif;font-weight:300;letter-spacing:.12em;font-size:24px}
 .sub{margin:0 0 24px;font-size:15px;opacity:.8;letter-spacing:.06em}
@@ -42,13 +41,19 @@ input:focus-visible{outline:2px solid var(--burgundy);outline-offset:1px;border-
 .back a{color:var(--burgundy)}
 </style>
 <script src="config.js" defer></script>
+  <script type="module" crossorigin src="/assets/login-CnyB9Mrm.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/site-DzUYBL_h.js">
+  <link rel="modulepreload" crossorigin href="/assets/preload-helper-CLcXU_4U.js">
+  <link rel="stylesheet" crossorigin href="/assets/site-B8Wmnywu.css">
 </head>
 <body>
 <header class="topnav">
-  <a class="brand" href="/" aria-label="Marigold Designs home"><img src="assets/logo-horizontal.webp" alt="Marigold Designs" width="760" height="308"></a>
+  <a class="brand" href="/" aria-label="Marigold Designs home"><img src="/assets/logo-horizontal-B8_auDSr.webp" alt="Marigold Designs" width="760" height="308"></a>
   <button id="menuBtn" class="menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="mainnav"><span></span><span></span><span></span></button>
-  <nav id="mainnav" aria-label="Main navigation"><a href="/">Welcome</a><a href="ourwork.html">Our Work</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="login.html" aria-current="page">Login</a></nav>
+<nav id="mainnav" aria-label="Main navigation"><a href="/">Welcome</a><a href="/ourwork.html">Our Work</a><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/login.html">Login</a></nav>
+
 </header>
+
 
 <main class="card">
   <h1>Client login</h1>
@@ -69,65 +74,5 @@ input:focus-visible{outline:2px solid var(--burgundy);outline-offset:1px;border-
 
 <footer>Marigold Designs · By Panna Patel</footer>
 
-<script type="module">
-const form = document.getElementById("login-form");
-const submit = document.getElementById("submit");
-const notice = document.getElementById("notice");
-const forgot = document.getElementById("forgot");
-
-function show(kind, msg){ notice.className = "notice " + kind; notice.textContent = msg; }
-function clearNotice(){ notice.className = "notice"; notice.textContent = ""; }
-
-const fbConfig = window.MARIGOLD_CONFIG && window.MARIGOLD_CONFIG.firebase;
-
-if (!fbConfig) {
-  submit.disabled = true;
-  show("info", "Client login isn’t connected yet — check back soon.");
-} else {
-  const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
-  const { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged } =
-    await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js");
-
-  const auth = getAuth(initializeApp(fbConfig));
-
-  // Already signed in? Straight to the portal.
-  onAuthStateChanged(auth, (user) => { if (user) location.replace("portal.html"); });
-
-  const friendly = (code) => ({
-    "auth/invalid-credential": "That email and password don’t match our records.",
-    "auth/user-not-found": "That email and password don’t match our records.",
-    "auth/wrong-password": "That email and password don’t match our records.",
-    "auth/invalid-email": "That doesn’t look like a valid email address.",
-    "auth/too-many-requests": "Too many attempts — please wait a few minutes and try again.",
-    "auth/network-request-failed": "Network trouble — check your connection and try again.",
-  }[code] || "Something went wrong signing you in. Please try again.");
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    clearNotice();
-    submit.disabled = true;
-    try {
-      await signInWithEmailAndPassword(auth, form.email.value.trim(), form.password.value);
-      location.replace("portal.html");
-    } catch (err) {
-      show("error", friendly(err.code));
-      submit.disabled = false;
-    }
-  });
-
-  forgot.addEventListener("click", async () => {
-    clearNotice();
-    const email = form.email.value.trim();
-    if (!email) { show("error", "Enter your email above first, then tap “Forgot password?” again."); return; }
-    try {
-      await sendPasswordResetEmail(auth, email);
-      show("info", "If that email has an account, a reset link is on its way.");
-    } catch {
-      show("info", "If that email has an account, a reset link is on its way.");
-    }
-  });
-}
-</script>
-<script src="site.js"></script>
 </body>
 </html>
