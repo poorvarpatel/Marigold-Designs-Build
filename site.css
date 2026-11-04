@@ -1,0 +1,93 @@
+/* Shared styles for all pages outside the main landing page. */
+:root{
+  --bg:#58011c;
+  --cream:#fcf2d1;
+  --orange:#fd9b01;
+  --gold:#f6ba18;
+  --coral:#fd562f;
+  --burgundy:#a20027;
+  --burgundy-dark:#7c001e;
+  --ink:#4a2a20;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{
+  background:var(--bg); /* flat, so the logo artwork blends seamlessly */
+  color:var(--cream);
+  font-family:"Josefin Sans",system-ui,sans-serif;
+  font-weight:300;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+  padding:110px 16px 40px;
+}
+
+/* Top bar: nav links pinned to the exact same coordinates on every page
+   (matching the main landing page), logo anchored separately top left so it
+   never shifts the links. */
+.topnav nav{
+  position:absolute;
+  top:16px;
+  right:22px;
+  display:flex;
+  align-items:center;
+  gap:26px;
+}
+.topnav .brand{position:absolute;top:16px;left:22px}
+.topnav a{
+  color:var(--cream);
+  text-decoration:none;
+  font-size:13px;
+  font-weight:400;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.topnav nav a:hover,.topnav nav a[aria-current]{color:var(--orange)}
+.topnav a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.topnav .brand img{display:block;height:84px;width:auto}
+@media(max-width:700px){
+  .topnav .brand img{height:48px}
+  .topnav nav{gap:14px}
+  .topnav a{font-size:11px;letter-spacing:.12em}
+}
+
+/* Shared card */
+.card{
+  width:100%;
+  max-width:400px;
+  background:var(--cream);
+  border:1px solid rgba(246,186,24,.3);
+  border-radius:14px;
+  box-shadow:0 22px 60px -24px rgba(0,0,0,.55);
+  padding:36px 32px 30px;
+  color:var(--ink);
+}
+h1{
+  margin:0 0 4px;
+  font-family:"Poiret One",serif;
+  font-weight:400;
+  font-size:26px;
+  letter-spacing:.06em;
+  color:var(--burgundy);
+}
+.button{
+  font:inherit;
+  font-weight:500;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  font-size:14px;
+  color:#fffaf2;
+  background:var(--burgundy);
+  border:0;
+  border-radius:8px;
+  padding:13px;
+  cursor:pointer;
+  transition:background .15s ease;
+}
+.button:hover{background:var(--burgundy-dark)}
+.button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.button[disabled]{opacity:.55;cursor:default}
+
+footer{margin-top:40px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;opacity:.8;text-align:center;color:var(--cream)}

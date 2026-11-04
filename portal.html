@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#58011c">
+<meta name="robots" content="noindex">
+<title>Your Event | Marigold Designs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Josefin+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<style>
+body{visibility:hidden} /* shown once auth state is known, to avoid a flash */
+.card{max-width:460px;text-align:center;padding:40px 34px 32px}
+.flower{font-size:28px;color:var(--orange)}
+h1{margin:10px 0 8px;font-size:28px}
+p{margin:0 0 10px;font-size:16px;line-height:1.55}
+.email{font-weight:400;color:var(--burgundy)}
+.soon{
+  margin:22px 0 4px;
+  padding:14px 16px;
+  background:#f3ecdf;
+  border:1px solid #ddceae;
+  border-radius:10px;
+  font-size:15px;
+}
+.button{
+  margin-top:26px;
+  font-size:13px;
+  color:var(--burgundy);
+  background:none;
+  border:1px solid var(--burgundy);
+  padding:10px 22px;
+}
+.button:hover{background:var(--burgundy);color:#fffaf2}
+</style>
+<script src="config.js" defer></script>
+</head>
+<body>
+<header class="topnav">
+  <a class="brand" href="/" aria-label="Marigold Designs home"><img src="assets/logo-horizontal.webp" alt="Marigold Designs" width="760" height="308"></a>
+  <nav aria-label="Main navigation"><a href="/">Welcome</a><a href="/">Our Work</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="login.html" aria-current="page">Login</a></nav>
+</header>
+
+<main class="card">
+  <div class="flower" aria-hidden="true">✳</div>
+  <h1>Welcome back</h1>
+  <p>You’re signed in as <span class="email" id="email"></span>.</p>
+  <div class="soon">Your event details are coming soon. We’re putting the finishing touches on this space — thank you for your patience.</div>
+  <button class="button" id="signout" type="button">Sign out</button>
+</main>
+
+<footer>Marigold Designs · By Panna Patel</footer>
+
+<script type="module">
+const fbConfig = window.MARIGOLD_CONFIG && window.MARIGOLD_CONFIG.firebase;
+if (!fbConfig) {
+  location.replace("login.html");
+} else {
+  const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
+  const { getAuth, onAuthStateChanged, signOut } =
+    await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js");
+
+  const auth = getAuth(initializeApp(fbConfig));
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user) { location.replace("login.html"); return; }
+    document.getElementById("email").textContent = user.email;
+    document.body.style.visibility = "visible";
+  });
+
+  document.getElementById("signout").addEventListener("click", async () => {
+    await signOut(auth);
+    location.replace("login.html");
+  });
+}
+</script>
+</body>
+</html>

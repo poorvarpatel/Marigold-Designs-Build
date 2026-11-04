@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#58011c">
+<meta name="robots" content="noindex">
+<title>Client Login | Marigold Designs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Josefin+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<style>
+.sub{margin:0 0 24px;font-size:15px;opacity:.8}
+label{display:block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin:16px 0 6px;color:var(--ink)}
+input{
+  width:100%;
+  font:inherit;
+  font-weight:400;
+  color:var(--ink);
+  background:#fff;
+  border:1px solid rgba(74,42,32,.25);
+  border-radius:8px;
+  padding:11px 12px;
+}
+input:focus-visible{outline:2px solid var(--burgundy);outline-offset:1px;border-color:transparent}
+.button{width:100%;margin-top:24px}
+.row{display:flex;justify-content:space-between;align-items:center;margin-top:16px;font-size:14px}
+.text-link{background:none;border:0;padding:0;font:inherit;font-size:14px;color:var(--burgundy);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.text-link:focus-visible{outline:2px solid var(--burgundy);outline-offset:2px}
+.notice{
+  margin:18px 0 0;
+  padding:11px 13px;
+  border-radius:8px;
+  font-size:14px;
+  display:none;
+}
+.notice.error{display:block;background:#fbe3e3;border:1px solid #e4b1b1;color:#7c001e}
+.notice.info{display:block;background:#f3ecdf;border:1px solid #ddceae;color:#5c4326}
+.back{margin-top:26px;font-size:14px}
+.back a{color:var(--burgundy)}
+</style>
+<script src="config.js" defer></script>
+</head>
+<body>
+<header class="topnav">
+  <a class="brand" href="/" aria-label="Marigold Designs home"><img src="assets/logo-horizontal.webp" alt="Marigold Designs" width="760" height="308"></a>
+  <nav aria-label="Main navigation"><a href="/">Welcome</a><a href="/">Our Work</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="login.html" aria-current="page">Login</a></nav>
+</header>
+
+<main class="card">
+  <h1>Client login</h1>
+  <p class="sub">Welcome back. Sign in to view your event.</p>
+  <form id="login-form">
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" autocomplete="email" required maxlength="254">
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" autocomplete="current-password" required minlength="6" maxlength="128">
+    <button class="button" id="submit" type="submit">Sign in</button>
+    <div class="row">
+      <button class="text-link" id="forgot" type="button">Forgot password?</button>
+    </div>
+    <p class="notice" id="notice" role="status" aria-live="polite"></p>
+  </form>
+  <p class="back"><a href="/">← Back to marigoldesigns.com</a></p>
+</main>
+
+<footer>Marigold Designs · By Panna Patel</footer>
+
+<script type="module">
+const form = document.getElementById("login-form");
+const submit = document.getElementById("submit");
+const notice = document.getElementById("notice");
+const forgot = document.getElementById("forgot");
+
+function show(kind, msg){ notice.className = "notice " + kind; notice.textContent = msg; }
+function clearNotice(){ notice.className = "notice"; notice.textContent = ""; }
+
+const fbConfig = window.MARIGOLD_CONFIG && window.MARIGOLD_CONFIG.firebase;
+
+if (!fbConfig) {
+  submit.disabled = true;
+  show("info", "Client login isn’t connected yet — check back soon.");
+} else {
+  const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
+  const { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged } =
+    await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js");
+
+  const auth = getAuth(initializeApp(fbConfig));
+
+  // Already signed in? Straight to the portal.
+  onAuthStateChanged(auth, (user) => { if (user) location.replace("portal.html"); });
+
+  const friendly = (code) => ({
+    "auth/invalid-credential": "That email and password don’t match our records.",
+    "auth/user-not-found": "That email and password don’t match our records.",
+    "auth/wrong-password": "That email and password don’t match our records.",
+    "auth/invalid-email": "That doesn’t look like a valid email address.",
+    "auth/too-many-requests": "Too many attempts — please wait a few minutes and try again.",
+    "auth/network-request-failed": "Network trouble — check your connection and try again.",
+  }[code] || "Something went wrong signing you in. Please try again.");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    clearNotice();
+    submit.disabled = true;
+    try {
+      await signInWithEmailAndPassword(auth, form.email.value.trim(), form.password.value);
+      location.replace("portal.html");
+    } catch (err) {
+      show("error", friendly(err.code));
+      submit.disabled = false;
+    }
+  });
+
+  forgot.addEventListener("click", async () => {
+    clearNotice();
+    const email = form.email.value.trim();
+    if (!email) { show("error", "Enter your email above first, then tap “Forgot password?” again."); return; }
+    try {
+      await sendPasswordResetEmail(auth, email);
+      show("info", "If that email has an account, a reset link is on its way.");
+    } catch {
+      show("info", "If that email has an account, a reset link is on its way.");
+    }
+  });
+}
+</script>
+</body>
+</html>
