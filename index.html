@@ -3,25 +3,85 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#fceddc">
+<meta name="theme-color" content="#fcefdf">
 <meta name="description" content="Marigold Designs — Event Decor Management by Panna Patel.">
 <title>Marigold Designs | Event Decor Management</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#fceddc}main{width:100%;position:relative}picture,img{display:block;width:100%;height:auto}
-/* Same top bar geometry as site.css, recolored for the cream artwork. */
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#fcefdf}
+main{width:100%;position:relative}
+.stage{position:relative;width:100%;overflow:hidden}
+.stage img{position:absolute;height:auto;display:block}
+.stage .text{position:absolute;left:0;width:100%;margin:0;text-align:center;font-family:"Josefin Sans",system-ui,sans-serif;font-weight:300;color:#8e1322;white-space:nowrap}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);margin:0}
+
+/* ---------- Desktop arrangement (mirrors the original 1585x992 artwork) ---------- */
+.stage-d{aspect-ratio:1585/992}
+.stage-d .petals-tl{left:0;top:0;width:40.38%}
+.stage-d .petals-br{left:51.74%;top:29.23%;width:48.26%}
+.stage-d .arc-tr{left:60.57%;top:7.56%;width:32.81%}
+.stage-d .arc-bl{left:3.78%;top:45.36%;width:53.00%}
+.stage-d .logo{left:39.12%;top:16.13%;width:23.03%}
+.stage-d .word-marigold{left:30.60%;top:52.12%;width:39.56%}
+.stage-d .word-designs{left:35.65%;top:65.52%;width:29.65%}
+.stage-d .tag1{top:76.10%;font-size:1.58vw;letter-spacing:.175em;text-indent:.175em}
+.stage-d .tag2{top:81.15%;font-size:1.39vw;letter-spacing:.13em;text-indent:.13em}
+.stage-m{display:none}
+
+/* ---------- Top navigation (same geometry as before) ---------- */
 .topnav nav{position:absolute;top:16px;right:22px;display:flex;align-items:center;gap:26px;font-family:"Josefin Sans",system-ui,sans-serif}
 .topnav a{color:#a20027;text-decoration:none;font-size:13px;font-weight:400;letter-spacing:.18em;text-transform:uppercase}
 .topnav nav a:hover,.topnav nav a[aria-current]{color:#fd9b01}
 .topnav a:focus-visible{outline:2px solid #a20027;outline-offset:3px}
-@media(max-width:700px){.topnav nav{gap:14px}.topnav a{font-size:11px;letter-spacing:.12em}}
+
+/* ---------- Mobile arrangement (mirrors the original 941x1672 artwork) ---------- */
+@media(max-width:700px){
+  .topnav nav{gap:14px}.topnav a{font-size:11px;letter-spacing:.12em}
+  .stage-d{display:none}
+  .stage-m{display:block;aspect-ratio:941/1672}
+  .stage-m .petals-tl{left:0;top:0;width:59.51%}
+  .stage-m .petals-br{left:20.19%;top:57.72%;width:79.81%}
+  .stage-m .arc-tr{left:43.04%;top:9.87%;width:52.60%}
+  .stage-m .arc-bl{left:1.59%;top:61.60%;width:53.67%}
+  .stage-m .logo{left:28.16%;top:23.20%;width:43.89%}
+  .stage-m .word-marigold{left:14.88%;top:46.83%;width:70.78%}
+  .stage-m .word-designs{left:22.10%;top:55.74%;width:56.00%}
+  .stage-m .tag1{top:62.80%;font-size:3.05vw;letter-spacing:.25em;text-indent:.25em}
+  .stage-m .tag2{top:66.21%;font-size:2.76vw;letter-spacing:.22em;text-indent:.22em}
+}
 </style>
 </head>
 <body>
-<main aria-label="Marigold Designs, Event Decor Management by Panna Patel">
-<picture><source media="(max-width:700px)" srcset="assets/mobile.png?v=2"><img src="assets/desktop.png?v=2" alt="Marigold Designs. Event Decor Management. By Panna Patel. Golden, coral and burgundy sculptural petals frame the Marigold pinwheel logo." width="1585" height="992" fetchpriority="high"></picture>
+<main>
+<h1 class="sr">Marigold Designs — Event Decor Management by Panna Patel</h1>
+
+<section class="stage stage-d" aria-hidden="false">
+  <img class="petals-tl" src="assets/petals-tl.webp" alt="" width="640" height="590">
+  <img class="petals-br" src="assets/petals-br.webp" alt="" width="765" height="702">
+  <img class="arc-tr" src="assets/arc-tr.webp" alt="" width="520" height="285">
+  <img class="arc-bl" src="assets/arc-bl.webp" alt="" width="840" height="542">
+  <img class="logo" src="assets/logo.webp" alt="" width="365" height="360" fetchpriority="high">
+  <img class="word-marigold" src="assets/word-marigold.webp" alt="" width="627" height="135">
+  <img class="word-designs" src="assets/word-designs.webp" alt="" width="470" height="78">
+  <p class="text tag1">Event Decor Management</p>
+  <p class="text tag2">By Panna Patel</p>
+</section>
+
+<section class="stage stage-m">
+  <img class="petals-tl" src="assets/petals-tl-m.webp" alt="" width="560" height="650">
+  <img class="petals-br" src="assets/petals-br-m.webp" alt="" width="751" height="707">
+  <img class="arc-tr" src="assets/arc-tr-m.webp" alt="" width="495" height="475">
+  <img class="arc-bl" src="assets/arc-bl-m.webp" alt="" width="505" height="642">
+  <img class="logo" src="assets/logo-m.webp" alt="" width="413" height="395" fetchpriority="high">
+  <img class="word-marigold" src="assets/word-marigold-m.webp" alt="" width="666" height="147">
+  <img class="word-designs" src="assets/word-designs-m.webp" alt="" width="527" height="88">
+  <p class="text tag1">Event Decor Management</p>
+  <p class="text tag2">By Panna Patel</p>
+</section>
+
 <header class="topnav"><nav aria-label="Main navigation"><a href="/" aria-current="page">Welcome</a><a href="/">Our Work</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="login.html">Login</a></nav></header>
 </main>
 </body>
